@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Index</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+  <h1>Anime Club</h1>
+
+  <form id='register-form'>
+    <input type='text' name='username' id='username' placeholder='Username: For your login'>
+    <input type='text' name='password' id='password' placeholder='Password: For your login'>
+    <input type='text' name='nickname' id='nickname' placeholder='Nickname: Name to be shown'>
+    <button>Register</button>
+  </form>
+
+  <div id='user-list'></div>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-firestore.js"></script>
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyA_B4jXUofKILIlVDNHTSuB2twUwHM9TxU",
+      authDomain: "animekurabu-5699a.firebaseapp.com",
+      databaseURL: "https://animekurabu-5699a.firebaseio.com",
+      projectId: "animekurabu-5699a",
+      storageBucket: "animekurabu-5699a.appspot.com",
+      messagingSenderId: "723343609814",
+      appId: "1:723343609814:web:8a269070c1edb69e201e77",
+      measurementId: "G-GPQ6MGWWV4"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+  </script>
+  <script src="main.js" async></script>
+</body>
+
+</html>
