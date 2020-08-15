@@ -6,10 +6,9 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
   // Check request is made by admin
   if(context.auth.token.admin != true){
     return {
-      error: 'Only admins can add other admins.'
+      error: 'You are not an admin'
     }
   }
-
   // Get user and add custom claim (admin)
   return admin.auth().getUserByEmail(data.email).then(user => {
     return admin.auth().setCustomUserClaims(user.uid, {
@@ -17,7 +16,70 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
     });
   }).then(() => {
     return {
-      message: `Success! ${data.email} has been made an admin.`
+      message: `Success! Admin action executed!`
+    }
+  }).catch(err => {
+    return err;
+  })
+});
+
+exports.addHighLevelManagerRole = functions.https.onCall((data, context) => {
+  // Check request is made by admin
+  if(context.auth.token.admin != true){
+    return {
+      error: 'You are not an admin'
+    }
+  }
+  // Get user and add custom claim (high level manager)
+  return admin.auth().getUserByEmail(data.email).then(user => {
+    return admin.auth().setCustomUserClaims(user.uid, {
+      highlevelmanager: true
+    });
+  }).then(() => {
+    return {
+      message: `Success! Admin action executed!`
+    }
+  }).catch(err => {
+    return err;
+  })
+});
+
+exports.addLowLevelManagerRole = functions.https.onCall((data, context) => {
+  // Check request is made by admin
+  if(context.auth.token.admin != true){
+    return {
+      error: 'You are not an admin'
+    }
+  }
+  // Get user and add custom claim (low level manager)
+  return admin.auth().getUserByEmail(data.email).then(user => {
+    return admin.auth().setCustomUserClaims(user.uid, {
+      lowlevelmanager: true
+    });
+  }).then(() => {
+    return {
+      message: `Success! Admin action executed!`
+    }
+  }).catch(err => {
+    return err;
+  })
+});
+
+exports.addClubHelperRole = functions.https.onCall((data, context) => {
+  // Check request is made by admin
+  if(context.auth.token.admin != true){
+    return {
+      error: 'You are not an admin'
+    }
+  }
+  // Get user and add custom claim (club helper)
+  return admin.auth().getUserByEmail(data.email).then(user => {
+    return admin.auth().setCustomUserClaims(user.uid, {
+      clubhelper: true
+    });
+  }).then(() => {
+    return {
+      message: `Success! Admin action executed!`
     }
   }).catch(err => {
     return err;
