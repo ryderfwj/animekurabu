@@ -36,7 +36,6 @@ const setupUI = (user) => {
 const createUserAnimeCardForm = document.querySelector('#create-user-anime-card-form');
 createUserAnimeCardForm.addEventListener('submit', (e) => {
   e.preventDefault();
-
   db.collection('users').add({
     pick1: {
       name: createUserAnimeCardForm['pick1-name'].value,
@@ -48,7 +47,7 @@ createUserAnimeCardForm.addEventListener('submit', (e) => {
     },
     pick3: {
       name: createUserAnimeCardForm['pick3-name'].value,
-      check3: createUserAnimeCardForm['pick3-check'].value,
+      check: createUserAnimeCardForm['pick3-check'].value,
     },
   }).then(() => {
     // Close modal and reset form
@@ -106,15 +105,15 @@ const setupUserAnimeCard = (data) => {
           </tr>
           <tr>
             <td>${users.pick1.name}</td>
-            <td><input type="checkbox" class="filled-in" ${pick1Check} disabled="disabled"></td>
+            <td><input type="checkbox" class="filled-in" ${pick1Check} style="pointer-events: none;"></td>
           </tr>
           <tr>
             <td>${users.pick2.name}</td>
-            <td><input type="checkbox" class="filled-in" ${pick2Check} disabled="disabled"></td>
+            <td><input type="checkbox" class="filled-in" ${pick2Check} style="pointer-events: none;"></td>
           </tr>
           <tr>
             <td>${users.pick3.name}</td>
-            <td><input type="checkbox" class="filled-in" ${pick3Check} disabled="disabled"></td>
+            <td><input type="checkbox" class="filled-in" ${pick3Check} style="pointer-events: none;"></td>
           </tr>
         </table>
       </td>

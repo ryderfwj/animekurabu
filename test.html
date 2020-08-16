@@ -25,47 +25,59 @@
   <table>
     <tr>
       <td>
-        <table>
+        <table data-id='${users.id}'>
           <tr>
             <td colspan="2">Kenobi</td>
           </tr>
           <tr>
-            <td>Anime 1</td>
-            <td><input type="checkbox"></td>
+            <td>${users.pick1.name}</td>
+            <td><input type="checkbox" class="filled-in" checked="checked" disabled="disabled"></td>
           </tr>
           <tr>
-            <td>Anime 2</td>
-            <td><input type="checkbox"></td>
+            <td>${users.pick2.name}</td>
+            <td><input type="checkbox" class="filled-in" disabled="disabled"></td>
+          </tr>
+          <tr>
+            <td>${users.pick3.name}</td>
+            <td><input type="checkbox" class="filled-in" disabled="disabled"></td>
           </tr>
         </table>
       </td>
       <td>
-        <table>
+        <table data-id='${users.id}'>
           <tr>
             <td colspan="2">Kenobi</td>
           </tr>
           <tr>
-            <td>Anime 1</td>
-            <td><input type="checkbox"></td>
+            <td>${users.pick1.name}</td>
+            <td><input type="checkbox" class="filled-in black-text" checked="checked" disabled="disabled"></td>
           </tr>
           <tr>
-            <td>Anime 2</td>
-            <td><input type="checkbox"></td>
+            <td>${users.pick2.name}</td>
+            <td><input type="checkbox" class="filled-in black-text" disabled="disabled"></td>
+          </tr>
+          <tr>
+            <td>${users.pick3.name}</td>
+            <td><input type="checkbox" class="filled-in black-text" disabled="disabled"></td>
           </tr>
         </table>
       </td>
       <td>
-        <table>
+        <table data-id='${users.id}'>
           <tr>
             <td colspan="2">Kenobi</td>
           </tr>
           <tr>
-            <td>Anime 1</td>
-            <td><input type="checkbox"></td>
+            <td>${users.pick1.name}</td>
+            <td><input type="checkbox" class="filled-in" checked="checked" style="pointer-events: none;"></td>
           </tr>
           <tr>
-            <td>Anime 2</td>
-            <td><input type="checkbox"></td>
+            <td>${users.pick2.name}</td>
+            <td><input type="checkbox" class="filled-in" style="pointer-events: none;"></td>
+          </tr>
+          <tr>
+            <td>${users.pick3.name}</td>
+            <td><input type="checkbox" class="filled-in" style="pointer-events: none;"></td>
           </tr>
         </table>
       </td>
@@ -163,6 +175,7 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script> -->
   <script>
     $(document).ready(function () {
+      $('input[type="checkbox"]')
     });
   </script>
 </body>

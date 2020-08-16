@@ -88,7 +88,7 @@ signupForm.addEventListener('submit', (e) => {
   // Sign up user
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     return db.collection('users').doc(cred.user.uid).set({
-      bio: signupForm['signup-bio'].value,
+      nickname: signupForm['signup-nickname'].value,
       pick1: {
         name: "",
         check: ""
