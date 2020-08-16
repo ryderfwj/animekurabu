@@ -1,5 +1,6 @@
+
 // Add admin cloud function
-const adminForm = document.querySelector('.admin-actions');
+const adminForm = document.querySelector('.add-admin-actions');
 adminForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const adminEmail = document.querySelector('#admin-email').value;
@@ -11,42 +12,68 @@ adminForm.addEventListener('submit', (e) => {
   });
 });
 
+// Add high level manager cloud function
+const highLevelManagerForm = document.querySelector('.add-high-level-manager-actions');
+highLevelManagerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const highLevelManagerEmail = document.querySelector('#high-level-manager-email').value;
+  const addHighLevelManagerRole = functions.httpsCallable('addHighLevelManagerRole');
+  addHighLevelManagerRole({
+    email: highLevelManagerEmail
+  }).then(result => {
+    console.log(result);
+  });
+});
+
+// Add low level manager cloud function
+const lowLevelManagerForm = document.querySelector('.add-low-level-manager-actions');
+lowLevelManagerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const lowLevelManagerEmail = document.querySelector('#low-level-manager-email').value;
+  const addLowLevelManagerRole = functions.httpsCallable('addLowLevelManagerRole');
+  addLowLevelManagerRole({
+    email: lowLevelManagerEmail
+  }).then(result => {
+    console.log(result);
+  });
+});
+
+// Add club helper cloud function
+const clubHelperForm = document.querySelector('.add-club-helper-actions');
+clubHelperForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const clubHelperEmail = document.querySelector('#club-helper-email').value;
+  const addClubHelperRole = functions.httpsCallable('addClubHelperRole');
+  addClubHelperRole({
+    email: clubHelperEmail
+  }).then(result => {
+    console.log(result);
+  });
+});
+
 // Listen for authentication status changes
 auth.onAuthStateChanged(user => {
-  if(user){
+  db.collection('users').get().then((snapshot) => {
+    console.log("Snapshot length: " + snapshot.docs.length);
+    setupUserAnimeCard(snapshot.docs);
+  });
+  if (user) {
     user.getIdTokenResult().then(idTokenResult => {
       user.admin = idTokenResult.claims.admin;
       setupUI(user);
     });
     console.log('User has logged in');
-    db.collection('guides').onSnapshot(snapshot => {
-      setupGuides(snapshot.docs);
-    }, err => {
-      console.log(err.message);
-    });
+    // db.collection('users').onSnapshot(snapshot => {
+    //   console.log("1 Snapshot length: " + snapshot.doc.length);
+    //   // setupUserAnimeCard(snapshot.docs);
+    // }, err => {
+    //   console.log("Error: " + err.message);
+    // });
+    
   } else {
     console.log('User has logged out');
     setupUI();
-    setupGuides([]);
   }
-});
-
-// Create new guide
-const createForm = document.querySelector('#create-form');
-createForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  db.collection('guides').add({
-    title: createForm['title'].value,
-    content: createForm['content'].value,
-  }).then(() => {
-    // Close modal and reset form
-    const modal = document.querySelector('#modal-create');
-    M.Modal.getInstance(modal).close();
-    createForm.reset();
-  }).catch(err => {
-    console.log(err.message);
-  });
 });
 
 // Signup
@@ -61,7 +88,20 @@ signupForm.addEventListener('submit', (e) => {
   // Sign up user
   auth.createUserWithEmailAndPassword(email, password).then(cred => {
     return db.collection('users').doc(cred.user.uid).set({
-      bio: signupForm['signup-bio'].value
+      bio: signupForm['signup-bio'].value,
+      pick1: {
+        name: "",
+        check: ""
+      },
+      pick2: {
+        name: "",
+        check: ""
+      },
+      pick3: {
+        name: "",
+        check: ""
+      },
+      status: "Active"
     });
   }).then(() => {
     const modal = document.querySelector('#modal-signup');

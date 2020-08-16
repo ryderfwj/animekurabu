@@ -9,7 +9,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Index</title>
+  <title>Main</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Compiled and minified CSS -->
@@ -21,29 +21,229 @@
   <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-  <h1>Anime Club</h1>
 
-  <!-- ADD NEW ENTRY MODAL -->
-  <div id="modal-new-entry" class="modal">
-    <div class="modal-content">
-      <h4>Sign up</h4><br />
-      <form id="signup-form">
-        <div class="input-field">
-          <input type="email" id="signup-email" required />
-          <label for="signup-email">Email address</label>
-        </div>
-        <div class="input-field">
-          <input type="password" id="signup-password" required />
-          <label for="signup-password">Choose password</label>
-        </div>
-        <div class="input-field">
-          <input type="text" id="signup-bio" required />
-          <label for="signup-bio">One Line Bio</label>
-        </div>
-        <button class="btn yellow darken-2 z-depth-0">Sign up</button>
-        <p class="error pink-text center-align"></p>
+  <div id="navigation-content">
+    <!-- NAVBAR -->
+    <nav class="z-depth-0 grey lighten-4">
+      <div class="nav-wrapper container">
+        <a href="#" class="brand-logo">
+          <img src="images/Jean Bart Summer PFP.PNG" style="width: 50px; height:50px; margin-top: 5px;">
+        </a>
+        <a href="#" class="sidenav-trigger" data-target="mobile-links">
+          <i class="material-icons">Menu</i>
+        </a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
+          </li>
+          <li class="logged-in" style="display: none;">
+            <a href="#" class="grey-text" id="logout">Logout</a>
+          </li>
+          <li class="admin" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+          </li>
+          <li class="logged-out" style="display: none;">
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+          </li>
+          <li class="admin" style="display: none;">
+            <a href="#!" class="grey-text dropdown-trigger" data-target="dropdown-1">Promote Users</a>
+            <ul id="dropdown-1" class="dropdown-content">
+              <li>
+                <a href="#" class="grey-text modal-trigger" data-target="modal-make-admin">Make Admin</a>
+              </li>
+              <li>
+                <a href="#" class="grey-text modal-trigger" data-target="modal-make-high-level-manager">Make High Level Manager</a>
+              </li>
+              <li>
+                <a href="#" class="grey-text modal-trigger" data-target="modal-make-low-level-manager">Make Low Level Manager</a>
+              </li>
+              <li>
+                <a href="#" class="grey-text modal-trigger" data-target="modal-club-helper">Make Club Helper</a>
+              </li>
+            </ul>
+          </li>
+          </span>
+        </ul>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-links">
+      <li class="logged-in" style="display: none;">
+        <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
+      </li>
+      <li class="logged-in" style="display: none;">
+        <a href="#" class="grey-text" id="logout">Logout</a>
+      </li>
+      <li class="admin" style="display: none;">
+        <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+      </li>
+      <li class="logged-out" style="display: none;">
+        <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
+      </li>
+      <li class="logged-out" style="display: none;">
+        <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
+      </li>
+    </ul>
+
+    <!-- ADMIN ACTIONS -->
+    <div id="modal-make-admin" class="modal">
+      <form class="center-align add-admin-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+        <input type="email" placeholder="User email" id="admin-email" required />
+        <button class="btn-small yellow darken-2 z-depth-0">Make Admin</button>
       </form>
     </div>
+    <div id="modal-make-high-level-manager" class="modal">
+      <form class="center-align add-high-level-manager-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+        <input type="email" placeholder="User email" id="high-level-manager-email" required />
+        <button class="btn-small yellow darken-2 z-depth-0">Make High Level Manager</button>
+      </form>
+    </div>
+    <div id="modal-make-low-level-manager" class="modal">
+      <form class="center-align add-low-level-manager-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+        <input type="email" placeholder="User email" id="low-level-manager-email" required />
+        <button class="btn-small yellow darken-2 z-depth-0">Make Low Level Manager</button>
+      </form>
+    </div>
+    <div id="modal-club-helper" class="modal">
+      <form class="center-align add-club-helper-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
+        <input type="email" placeholder="User email" id="club-helper-email" required />
+        <button class="btn-small yellow darken-2 z-depth-0">Make Club Helper</button>
+      </form>
+    </div>
+
+    <!-- SIGN UP MODAL -->
+    <div id="modal-signup" class="modal">
+      <div class="modal-content">
+        <h4>Sign up</h4><br />
+        <form id="signup-form">
+          <div class="input-field">
+            <input type="email" id="signup-email" required />
+            <label for="signup-email">Email address</label>
+          </div>
+          <div class="input-field">
+            <input type="password" id="signup-password" required />
+            <label for="signup-password">Choose password</label>
+          </div>
+          <div class="input-field">
+            <input type="text" id="signup-bio" required />
+            <label for="signup-bio">One Line Bio</label>
+          </div>
+          <button class="btn yellow darken-2 z-depth-0">Sign up</button>
+          <p class="error pink-text center-align"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- LOGIN MODAL -->
+    <div id="modal-login" class="modal">
+      <div class="modal-content">
+        <h4>Login</h4><br />
+        <form id="login-form">
+          <div class="input-field">
+            <input type="email" id="login-email" required />
+            <label for="login-email">Email address</label>
+          </div>
+          <div class="input-field">
+            <input type="password" id="login-password" required />
+            <label for="login-password">Your password</label>
+          </div>
+          <button class="btn yellow darken-2 z-depth-0">Login</button>
+          <p class="error pink-text center-align"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- ACCOUNT MODAL -->
+    <div id="modal-account" class="modal">
+      <div class="modal-content center-align">
+        <h4>Account details</h4><br />
+        <div class="account-details"></div>
+        <div class="account-extras"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CREATE USER ANIME CARD MODAL -->
+  <div id="modal-create-user-anime-card" class="modal admin">
+    <div class="modal-content">
+      <h4>Create User Anime Card</h4><br />
+      <form id="create-user-anime-card-form">
+        <table>
+          <tr>
+            <td>
+              <div class="input-field">
+                <input type="text" id="pick1-name" id="title">
+                <label for="content">Pick 1</label>
+              </div>
+            </td>
+            <td>
+              <p>
+                <label>
+                  <input id="pick1-check" type="checkbox" class="filled-in" value="false" />
+                  <span>Picked</span>
+                </label>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="input-field">
+                <input type="text" id="pick2-name" id="title">
+                <label for="title">Pick 2</label>
+              </div>
+            </td>
+            <td>
+              <p>
+                <label>
+                  <input id="pick2-check" type="checkbox" class="filled-in" value="false" />
+                  <span>Picked</span>
+                </label>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="input-field">
+                <input type="text" id="pick3-name" id="title">
+                <label for="title">Pick 3</label>
+              </div>
+            </td>
+            <td>
+              <p>
+                <label>
+                  <input id="pick3-check" type="checkbox" class="filled-in" value="false" />
+                  <span>Picked</span>
+                </label>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="input-field col s12">
+                <select>
+                  <option value="" disabled selected>Choose your option</option>
+                  <option value="1">Active</option>
+                  <option value="2">Milk Carton</option>
+                </select>
+                <label>Status</label>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <button class="btn yellow darken-2 z-depth-0">Create</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- USER ANIME CARD LIST -->
+  <div id="user-anime-card-container">
+    <table id="user-anime-card-table" class="user-anime-card-table">
+
+    </table>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
@@ -70,9 +270,10 @@
 
   </script>
   <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="scripts/index.js"></script>
-  <script async src="scripts/auth.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/auth.js"></script>
 </body>
 </body>
 
