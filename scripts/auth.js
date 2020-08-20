@@ -55,7 +55,8 @@ clubHelperForm.addEventListener('submit', (e) => {
 auth.onAuthStateChanged(user => {
   db.collection('users').get().then((snapshot) => {
     console.log("Snapshot length: " + snapshot.docs.length);
-    setupUserAnimeCard(snapshot.docs);
+    $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
+    console.log(snapshot.docs);
   });
   if (user) {
     user.getIdTokenResult().then(idTokenResult => {
@@ -90,18 +91,18 @@ signupForm.addEventListener('submit', (e) => {
     return db.collection('users').doc(cred.user.uid).set({
       nickname: signupForm['signup-nickname'].value,
       pick1: {
-        name: "",
-        check: ""
+        name: "Empty",
+        check: "false"
       },
       pick2: {
-        name: "",
-        check: ""
+        name: "Empty",
+        check: "false"
       },
       pick3: {
-        name: "",
-        check: ""
+        name: "Empty",
+        check: "false"
       },
-      status: "Active"
+      activity: "Active"
     });
   }).then(() => {
     const modal = document.querySelector('#modal-signup');

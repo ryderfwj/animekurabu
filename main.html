@@ -167,16 +167,29 @@
   </div>
 
   <!-- CREATE USER ANIME CARD MODAL -->
-  <div id="modal-create-user-anime-card" class="modal admin">
+  <div id="modal-create-user-anime-card" class="modal" style="display:none;">
     <div class="modal-content">
-      <h4>Create User Anime Card</h4><br />
+      <div id="gridUpdateAnimeCardHeader">
+        <h4 id="updateAnimeCardTitle">Update User Anime Card</h4>
+        <button id="closeUpdateAnimeCard" class="close">&times;</button>
+      </div>
+      <br />
       <form id="create-user-anime-card-form">
+        <input type="hidden" id="anime-card-user-id">
         <table>
           <tr>
             <td>
               <div class="input-field">
+                <input type="text" id="animeCardUsername" id="title">
+                <label for="title">Username</label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div class="input-field">
                 <input type="text" id="pick1-name" id="title">
-                <label for="content">Pick 1</label>
+                <label for="title">Pick 1</label>
               </div>
             </td>
             <td>
@@ -222,28 +235,43 @@
           </tr>
           <tr>
             <td>
-              <div class="input-field col s12">
-                <select>
-                  <option value="" disabled selected>Choose your option</option>
-                  <option value="1">Active</option>
-                  <option value="2">Milk Carton</option>
-                </select>
-                <label>Status</label>
-              </div>
+              <p>
+                <label>
+                  <input class="with-gap" id="radio-active" name="group1" type="radio" value="Active" />
+                  <span>Active</span>
+                </label>
+              </p>
+              <p>
+                <label>
+                  <input class="with-gap" id="radio-milk" name="group1" type="radio" value="Milk Carton" />
+                  <span>Milk Carton</span>
+                </label>
+              </p>
             </td>
           </tr>
         </table>
 
-        <button class="btn yellow darken-2 z-depth-0">Create</button>
+        <button class="btn yellow darken-2 z-depth-0">Update</button>
+        <button class="btn yellow darken-2 z-depth-0">Hall of Fame</button>
       </form>
     </div>
   </div>
 
   <!-- USER ANIME CARD LIST -->
-  <div id="user-anime-card-container">
-    <table id="user-anime-card-table" class="user-anime-card-table">
+  <div id="active-anime-card-container">
+    <table id="activeAnimeCardTable" class="user-anime-card-table">
 
     </table>
+  </div>
+
+  <div id="milkcarton-anime-card-container">
+    <table id="milkCartonAnimeCardTable" class="user-anime-card-table">
+
+    </table>
+  </div>
+
+  <div id="loaderOverlay">
+    <div id="loaderSpin"></div> 
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
