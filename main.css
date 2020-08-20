@@ -3,6 +3,14 @@
   opacity: 1;
   position: inherit;
 }
+#contentWrapperContainer{
+  width:90%;
+  margin: auto;
+}
+.td-main-cell{
+  width: 19%;
+  display: inline-block;
+}
 #modal-create-user-anime-card {
   max-height: 80% !important;
   height: 80% !important;

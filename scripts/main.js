@@ -6,16 +6,24 @@ const adminItems = document.querySelectorAll('.admin');
 
 const setupUI = (user) => {
   if (user) {
-    if (user.admin) {
-      adminItems.forEach(item => item.style.display = 'block');
-      $(".anime-card").eq(0).click();
-      $("#modal-create-user-anime-card").css("display", "none");
-    }
+    firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+      if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
+        adminItems.forEach(item => item.style.display = 'block');
+        $("#loaderOverlay").show();
+        $(".anime-card").eq(0).click();
+        setTimeout(function () {
+          $("#modal-create-user-anime-card").css("display", "none");
+          $("#loaderOverlay").hide();
+        }, 1000);
+
+      }
+    });
     // Display account information
     db.collection('users').doc(user.uid).get().then(doc => {
       const html = `
         <div>Logged in as ${user.email}</div>
         <div class="pink-text">${user.admin ? 'Admin' : ''}</div>
+        <div class="pink-text">${user.highlevel ? 'High Level User' : ''}</div>
       `;
       accountDetails.innerHTML = html;
     })
@@ -37,10 +45,7 @@ const setupUI = (user) => {
 const activeAnimeCardTable = document.querySelector('#activeAnimeCardTable');
 const milkCartonAnimeCardTable = document.querySelector('#milkCartonAnimeCardTable');
 function setupUserAnimeCard(data) {
-  //const setupUserAnimeCard = (data) => {
-  console.log("Runing Anime Card");
   if (data.length) {
-    console.log("Data length > 0");
     let activeHTML = '';
     let milkCartonHTML = '';
     let activeCounter = 0;
@@ -77,7 +82,7 @@ function setupUserAnimeCard(data) {
         }
 
         var li = `
-        <td>
+        <td class="td-main-cell">
           <table class="anime-card active-user" data-id='${doc.id}'>
             <tr>
               <td colspan="2" class="anime-card-username">${users.nickname}</td>
@@ -135,7 +140,7 @@ function setupUserAnimeCard(data) {
         }
 
         var li = `
-        <td>
+        <td class="td-main-cell">
           <table class="anime-card milk-carton" data-id='${doc.id}'>
             <tr>
               <td colspan="2" class="anime-card-username">${users.nickname}</td>
@@ -173,7 +178,6 @@ function setupUserAnimeCard(data) {
     activeAnimeCardTable.innerHTML = activeHTML;
     milkCartonAnimeCardTable.innerHTML = milkCartonHTML;
   } else {
-    console.log("Data length = 0");
     activeAnimeCardTable.innerHTML = `<h5 class='center-align'>Login to view</h5>`;
   }
 }
@@ -195,14 +199,14 @@ function addOnClick() {
     $("#animeCardUsername").val(username);
 
     var userActivity = $(this).find(".anime-card-activity").html();
-    if(userActivity != null){
-      if(userActivity == "Active"){
+    if (userActivity != null) {
+      if (userActivity == "Active") {
         $("#radio-active").click();
-      }else if(userActivity == "Milk Carton"){
+      } else if (userActivity == "Milk Carton") {
         $("#radio-milk").click();
       }
     }
-    
+
     //Pick 1
     var pick1name = $(this).find(".pick1name").html();
     var pick1check = $(this).find(".pick1check").attr("checked");
@@ -227,17 +231,15 @@ function addOnClick() {
       $("#pick3-check").click();
     }
 
-    $("#animeCardUsername").focus();
-    $("#pick1-name").focus();
-    $("#pick2-name").focus();
-    $("#pick3-name").focus();
+    $(function () {
+      M.updateTextFields();
+    });
 
-    console.log("Data Id: " + dataId);
     $('#anime-card-user-id').attr('value', dataId);
-    setTimeout(function(){
+    setTimeout(function () {
       $('#modal-create-user-anime-card').css('display', 'block');
-    }, 100);
-    
+    }, 200);
+
   });
 }
 
@@ -246,7 +248,6 @@ const updateAnimeCardForm = document.querySelector('#create-user-anime-card-form
 updateAnimeCardForm.addEventListener('submit', (e) => {
   e.preventDefault();
   var userId = $('#anime-card-user-id').attr('value');
-  console.log("User Id: " + userId);
   db.collection('users').doc(userId).update({
     nickname: updateAnimeCardForm['animeCardUsername'].value,
     pick1: {
@@ -261,6 +262,7 @@ updateAnimeCardForm.addEventListener('submit', (e) => {
       name: updateAnimeCardForm['pick3-name'].value,
       check: updateAnimeCardForm['pick3-check'].value,
     },
+    activity: updateAnimeCardForm['radio-value'].value,
   }).then(() => {
     // Close modal and reset form
     const modal = document.querySelector('#modal-create-user-anime-card');
@@ -272,14 +274,22 @@ updateAnimeCardForm.addEventListener('submit', (e) => {
   });
 });
 
-$('#closeUpdateAnimeCard').on("click", function (){
+$('#closeUpdateAnimeCard').on("click", function () {
   updateAnimeCardForm.reset();
   $("#modal-create-user-anime-card").css("display", "none");
 });
 
+$('#radio-active').on("click", function () {
+  $("#radio-value").attr("value", "Active");
+});
+
+$('#radio-milk').on("click", function () {
+  $("#radio-value").attr("value", "Milk Carton");
+});
+
 $(document).ready(function () {
   checkBox();
-  setTimeout(function(){
+  setTimeout(function () {
     loaderHide();
   }, 1000);
 
@@ -290,19 +300,17 @@ $(document).ready(function () {
     $('input[type="checkbox"]').click(function () {
       if ($(this).prop("checked") == true) {
         $(this).val("true");
-        console.log($(this).val());
       } else if ($(this).prop("checked") == false) {
         $(this).val("false");
-        console.log($(this).val());
       }
     });
   }
 
-  function loaderShow(){
+  function loaderShow() {
     $("#loaderOverlay").show();
   }
 
-  function loaderHide(){
+  function loaderHide() {
     $("#loaderOverlay").hide();
   }
 

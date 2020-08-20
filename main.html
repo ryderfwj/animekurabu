@@ -26,9 +26,11 @@
     <!-- NAVBAR -->
     <nav class="z-depth-0 grey lighten-4">
       <div class="nav-wrapper container">
-        <a href="#" class="brand-logo">
+
+        <a href="#" class="brand-logo left">
           <img src="images/Jean Bart Summer PFP.PNG" style="width: 50px; height:50px; margin-top: 5px;">
         </a>
+
         <a href="#" class="sidenav-trigger" data-target="mobile-links">
           <i class="material-icons">Menu</i>
         </a>
@@ -40,13 +42,10 @@
             <a href="#" class="grey-text" id="logout">Logout</a>
           </li>
           <li class="admin" style="display: none;">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Add User</a>
           </li>
           <li class="logged-out" style="display: none;">
             <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
-          </li>
-          <li class="logged-out" style="display: none;">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
           </li>
           <li class="admin" style="display: none;">
             <a href="#!" class="grey-text dropdown-trigger" data-target="dropdown-1">Promote Users</a>
@@ -78,13 +77,10 @@
         <a href="#" class="grey-text" id="logout">Logout</a>
       </li>
       <li class="admin" style="display: none;">
-        <a href="#" class="grey-text modal-trigger" data-target="modal-create">Create Guide</a>
+        <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Add User</a>
       </li>
       <li class="logged-out" style="display: none;">
         <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
-      </li>
-      <li class="logged-out" style="display: none;">
-        <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Sign up</a>
       </li>
     </ul>
 
@@ -249,29 +245,38 @@
               </p>
             </td>
           </tr>
+          <tr style="display: none;">
+            <td><input id="radio-value" value=""></td>
+          </tr>
         </table>
 
         <button class="btn yellow darken-2 z-depth-0">Update</button>
-        <button class="btn yellow darken-2 z-depth-0">Hall of Fame</button>
+        <button class="btn yellow darken-2 z-depth-0" disabled>Hall of Fame</button>
       </form>
     </div>
   </div>
 
-  <!-- USER ANIME CARD LIST -->
-  <div id="active-anime-card-container">
-    <table id="activeAnimeCardTable" class="user-anime-card-table">
+  <div id="contentWrapperContainer">
+    <div>Boy do i suck at design placeholder text</div>
+    <!-- USER ANIME CARD LIST -->
+    <div id="active-anime-card-container">
+      <h5>Active</h5>
+      <table id="activeAnimeCardTable" class="user-anime-card-table">
 
-    </table>
+      </table>
+    </div>
+
+    <div id="milkcarton-anime-card-container">
+      <h5>Milk Carton</h5>
+      <table id="milkCartonAnimeCardTable" class="user-anime-card-table">
+
+      </table>
+    </div>
   </div>
 
-  <div id="milkcarton-anime-card-container">
-    <table id="milkCartonAnimeCardTable" class="user-anime-card-table">
-
-    </table>
-  </div>
 
   <div id="loaderOverlay">
-    <div id="loaderSpin"></div> 
+    <div id="loaderSpin"></div>
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>

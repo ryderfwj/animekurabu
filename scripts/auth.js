@@ -54,27 +54,38 @@ clubHelperForm.addEventListener('submit', (e) => {
 // Listen for authentication status changes
 auth.onAuthStateChanged(user => {
   db.collection('users').get().then((snapshot) => {
-    console.log("Snapshot length: " + snapshot.docs.length);
-    $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
-    console.log(snapshot.docs);
+    if (user) {
+      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+        if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
+          $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
+        }else{
+          setupUserAnimeCard(snapshot.docs);
+        }
+      });
+    }else{
+      setupUserAnimeCard(snapshot.docs);
+    }
+    
   });
   if (user) {
     user.getIdTokenResult().then(idTokenResult => {
-      user.admin = idTokenResult.claims.admin;
       setupUI(user);
     });
     console.log('User has logged in');
-    // db.collection('users').onSnapshot(snapshot => {
-    //   console.log("1 Snapshot length: " + snapshot.doc.length);
-    //   // setupUserAnimeCard(snapshot.docs);
-    // }, err => {
-    //   console.log("Error: " + err.message);
-    // });
-    
   } else {
     console.log('User has logged out');
     setupUI();
   }
+});
+
+db.collection('users').onSnapshot(snapshot => {
+  firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+    if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
+      $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
+    }else{
+      setupUserAnimeCard(snapshot.docs);
+    }
+  });
 });
 
 // Signup
