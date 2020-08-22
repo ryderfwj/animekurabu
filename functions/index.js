@@ -1,10 +1,11 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const { user } = require('firebase-functions/lib/providers/auth');
 admin.initializeApp();
 
 exports.addAdminRole = functions.https.onCall((data, context) => {
   // Check request is made by admin
-  if(context.auth.token.admin != true){
+  if (context.auth.token.admin != true) {
     return {
       error: 'You are not an admin'
     }
@@ -25,7 +26,7 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
 
 exports.addHighLevelManagerRole = functions.https.onCall((data, context) => {
   // Check request is made by admin
-  if(context.auth.token.admin != true){
+  if (context.auth.token.admin != true) {
     return {
       error: 'You are not an admin'
     }
@@ -46,7 +47,7 @@ exports.addHighLevelManagerRole = functions.https.onCall((data, context) => {
 
 exports.addLowLevelManagerRole = functions.https.onCall((data, context) => {
   // Check request is made by admin
-  if(context.auth.token.admin != true){
+  if (context.auth.token.admin != true) {
     return {
       error: 'You are not an admin'
     }
@@ -67,7 +68,7 @@ exports.addLowLevelManagerRole = functions.https.onCall((data, context) => {
 
 exports.addClubHelperRole = functions.https.onCall((data, context) => {
   // Check request is made by admin
-  if(context.auth.token.admin != true){
+  if (context.auth.token.admin != true) {
     return {
       error: 'You are not an admin'
     }
@@ -84,4 +85,22 @@ exports.addClubHelperRole = functions.https.onCall((data, context) => {
   }).catch(err => {
     return err;
   })
+});
+
+exports.addNewUser = functions.https.onCall((data, context) => {
+  // Check request is made by admin
+  if (context.auth.token.admin != true) {
+    return {
+      error: 'You are not an admin'
+    }
+  }
+  return admin.auth().createUser({
+    email: data.email,
+    password: data.password
+  }, function(err, user) {
+    if (!err) {
+      return user.uid;
+    }
+  });
+
 });

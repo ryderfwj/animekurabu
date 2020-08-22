@@ -1,10 +1,4 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js">
-<!--<![endif]-->
 
 <head>
   <meta charset="utf-8">
@@ -13,267 +7,92 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Compiled and minified CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
   <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
-  <!--[if lt IE 7]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <div id="modalWrapper" class="modal-wrapper"></div>
+  <div id="navBarWrapper" class="nav-bar-wrapper"></div>
 
-  <div id="navigation-content">
-    <!-- NAVBAR -->
-    <nav class="z-depth-0 grey lighten-4">
-      <div class="nav-wrapper container">
-
-        <a href="#" class="brand-logo left">
-          <img src="images/Jean Bart Summer PFP.PNG" style="width: 50px; height:50px; margin-top: 5px;">
-        </a>
-
-        <a href="#" class="sidenav-trigger" data-target="mobile-links">
-          <i class="material-icons">Menu</i>
-        </a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li class="logged-in" style="display: none;">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
-          </li>
-          <li class="logged-in" style="display: none;">
-            <a href="#" class="grey-text" id="logout">Logout</a>
-          </li>
-          <li class="admin" style="display: none;">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Add User</a>
-          </li>
-          <li class="logged-out" style="display: none;">
-            <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
-          </li>
-          <li class="admin" style="display: none;">
-            <a href="#!" class="grey-text dropdown-trigger" data-target="dropdown-1">Promote Users</a>
-            <ul id="dropdown-1" class="dropdown-content">
-              <li>
-                <a href="#" class="grey-text modal-trigger" data-target="modal-make-admin">Make Admin</a>
-              </li>
-              <li>
-                <a href="#" class="grey-text modal-trigger" data-target="modal-make-high-level-manager">Make High Level Manager</a>
-              </li>
-              <li>
-                <a href="#" class="grey-text modal-trigger" data-target="modal-make-low-level-manager">Make Low Level Manager</a>
-              </li>
-              <li>
-                <a href="#" class="grey-text modal-trigger" data-target="modal-club-helper">Make Club Helper</a>
-              </li>
-            </ul>
-          </li>
-          </span>
-        </ul>
-      </div>
-    </nav>
-
-    <ul class="sidenav" id="mobile-links">
-      <li class="logged-in" style="display: none;">
-        <a href="#" class="grey-text modal-trigger" data-target="modal-account">Account</a>
-      </li>
-      <li class="logged-in" style="display: none;">
-        <a href="#" class="grey-text" id="logout">Logout</a>
-      </li>
-      <li class="admin" style="display: none;">
-        <a href="#" class="grey-text modal-trigger" data-target="modal-signup">Add User</a>
-      </li>
-      <li class="logged-out" style="display: none;">
-        <a href="#" class="grey-text modal-trigger" data-target="modal-login">Login</a>
-      </li>
-    </ul>
-
-    <!-- ADMIN ACTIONS -->
-    <div id="modal-make-admin" class="modal">
-      <form class="center-align add-admin-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
-        <input type="email" placeholder="User email" id="admin-email" required />
-        <button class="btn-small yellow darken-2 z-depth-0">Make Admin</button>
-      </form>
-    </div>
-    <div id="modal-make-high-level-manager" class="modal">
-      <form class="center-align add-high-level-manager-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
-        <input type="email" placeholder="User email" id="high-level-manager-email" required />
-        <button class="btn-small yellow darken-2 z-depth-0">Make High Level Manager</button>
-      </form>
-    </div>
-    <div id="modal-make-low-level-manager" class="modal">
-      <form class="center-align add-low-level-manager-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
-        <input type="email" placeholder="User email" id="low-level-manager-email" required />
-        <button class="btn-small yellow darken-2 z-depth-0">Make Low Level Manager</button>
-      </form>
-    </div>
-    <div id="modal-club-helper" class="modal">
-      <form class="center-align add-club-helper-actions admin" style="margin: 40px auto; max-width: 300px; display: none;">
-        <input type="email" placeholder="User email" id="club-helper-email" required />
-        <button class="btn-small yellow darken-2 z-depth-0">Make Club Helper</button>
-      </form>
-    </div>
-
-    <!-- SIGN UP MODAL -->
-    <div id="modal-signup" class="modal">
+  <!-- Update user -->
+  <div id="updateUserModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
       <div class="modal-content">
-        <h4>Sign up</h4><br />
-        <form id="signup-form">
-          <div class="input-field">
-            <input type="email" id="signup-email" required />
-            <label for="signup-email">Email address</label>
-          </div>
-          <div class="input-field">
-            <input type="password" id="signup-password" required />
-            <label for="signup-password">Choose password</label>
-          </div>
-          <div class="input-field">
-            <input type="text" id="signup-nickname" required />
-            <label for="signup-nickname">Nickname</label>
-          </div>
-          <button class="btn yellow darken-2 z-depth-0">Sign up</button>
-          <p class="error pink-text center-align"></p>
-        </form>
+        <div class="modal-header">
+          <h5 class="modal-title">Update user card</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="updateUserForm" class="forms">
+            <input type="hidden" id="updateUserId">
+            <input type="hidden" id="updateActivity">
+            <div class="form-group">
+              <label for="updateUserName">Username</label>
+              <input type="text" class="form-control" id="updateUserName">
+            </div>
+            <div class="form-group">
+              <label for="updatePick1Name">Pick 1</label>
+              <input type="text" class="form-control" id="updatePick1Name">
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="updatePick1Check" value="false">
+              <label class="custom-control-label" for="updatePick1Check"></label>
+            </div>
+            <hr />
+            <div class="form-group">
+              <label for="updatePick2Name">Pick 2</label>
+              <input type="text" class="form-control" id="updatePick2Name">
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="updatePick2Check" value="false">
+              <label class="custom-control-label" for="updatePick2Check"></label>
+            </div>
+            <hr />
+            <div class="form-group">
+              <label for="updatePick3Name">Pick 3</label>
+              <input type="text" class="form-control" id="updatePick3Name">
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="updatePick3Check" value="false">
+              <label class="custom-control-label" for="updatePick3Check"></label>
+            </div>
+            <hr />
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="activeRadio" value="Active">
+              <label class="form-check-label" for="activeRadio">Active</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="cartonRadio" value="Milk Carton">
+              <label class="form-check-label" for="cartonRadio">Milk Carton</label>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="updateCardBtn" type="button" class="btn btn-primary">Save changes</button>
+        </div>
       </div>
-    </div>
-
-    <!-- LOGIN MODAL -->
-    <div id="modal-login" class="modal">
-      <div class="modal-content">
-        <h4>Login</h4><br />
-        <form id="login-form">
-          <div class="input-field">
-            <input type="email" id="login-email" required />
-            <label for="login-email">Email address</label>
-          </div>
-          <div class="input-field">
-            <input type="password" id="login-password" required />
-            <label for="login-password">Your password</label>
-          </div>
-          <button class="btn yellow darken-2 z-depth-0">Login</button>
-          <p class="error pink-text center-align"></p>
-        </form>
-      </div>
-    </div>
-
-    <!-- ACCOUNT MODAL -->
-    <div id="modal-account" class="modal">
-      <div class="modal-content center-align">
-        <h4>Account details</h4><br />
-        <div class="account-details"></div>
-        <div class="account-extras"></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CREATE USER ANIME CARD MODAL -->
-  <div id="modal-create-user-anime-card" class="modal" style="display:none;">
-    <div class="modal-content">
-      <div id="gridUpdateAnimeCardHeader">
-        <h4 id="updateAnimeCardTitle">Update User Anime Card</h4>
-        <button id="closeUpdateAnimeCard" class="close">&times;</button>
-      </div>
-      <br />
-      <form id="create-user-anime-card-form">
-        <input type="hidden" id="anime-card-user-id">
-        <table>
-          <tr>
-            <td>
-              <div class="input-field">
-                <input type="text" id="animeCardUsername" id="title">
-                <label for="title">Username</label>
-              </div>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="input-field">
-                <input type="text" id="pick1-name" id="title">
-                <label for="title">Pick 1</label>
-              </div>
-            </td>
-            <td>
-              <p>
-                <label>
-                  <input id="pick1-check" type="checkbox" class="filled-in" value="false" />
-                  <span>Picked</span>
-                </label>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="input-field">
-                <input type="text" id="pick2-name" id="title">
-                <label for="title">Pick 2</label>
-              </div>
-            </td>
-            <td>
-              <p>
-                <label>
-                  <input id="pick2-check" type="checkbox" class="filled-in" value="false" />
-                  <span>Picked</span>
-                </label>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <div class="input-field">
-                <input type="text" id="pick3-name" id="title">
-                <label for="title">Pick 3</label>
-              </div>
-            </td>
-            <td>
-              <p>
-                <label>
-                  <input id="pick3-check" type="checkbox" class="filled-in" value="false" />
-                  <span>Picked</span>
-                </label>
-              </p>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <p>
-                <label>
-                  <input class="with-gap" id="radio-active" name="group1" type="radio" value="Active" />
-                  <span>Active</span>
-                </label>
-              </p>
-              <p>
-                <label>
-                  <input class="with-gap" id="radio-milk" name="group1" type="radio" value="Milk Carton" />
-                  <span>Milk Carton</span>
-                </label>
-              </p>
-            </td>
-          </tr>
-          <tr style="display: none;">
-            <td><input id="radio-value" value=""></td>
-          </tr>
-        </table>
-
-        <button class="btn yellow darken-2 z-depth-0">Update</button>
-        <button class="btn yellow darken-2 z-depth-0" disabled>Hall of Fame</button>
-      </form>
     </div>
   </div>
 
   <div id="contentWrapperContainer">
-    <div>Boy do i suck at design placeholder text</div>
-    <!-- USER ANIME CARD LIST -->
-    <div id="active-anime-card-container">
-      <h5>Active</h5>
-      <table id="activeAnimeCardTable" class="user-anime-card-table">
-
-      </table>
+    <div id="activeTableWrapper">
+      <h5 class="table-title">Active </h5>
+      <table id="activeTable" class="active-outer-table table"></table>
     </div>
-
-    <div id="milkcarton-anime-card-container">
-      <h5>Milk Carton</h5>
-      <table id="milkCartonAnimeCardTable" class="user-anime-card-table">
-
-      </table>
+    <div id="hofTableWrapper">
+      <h5 class="table-title">Hall of Fame </h5>
+      <table id="hofTable" class="hof-outer-table table"></table>
+    </div>
+    <div id="cartonTableWrapper">
+      <h5 class="table-title">Milk Carton </h5>
+      <table id="cartonTable" class="carton-outer-table table"></table>
     </div>
   </div>
-
 
   <div id="loaderOverlay">
     <div id="loaderSpin"></div>
@@ -304,9 +123,15 @@
   </script>
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="scripts/main.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+    integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+    integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
   <script src="scripts/auth.js"></script>
+  <script src="scripts/main.js"></script>
+
+
+
 </body>
 </body>
 

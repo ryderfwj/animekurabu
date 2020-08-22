@@ -1,34 +1,32 @@
-.user-anime-card-table [type="checkbox"]:not(:checked),
-.user-anime-card-table [type="checkbox"]:checked {
-  opacity: 1;
-  position: inherit;
-}
 #contentWrapperContainer{
-  width:90%;
+  width:80%;
   margin: auto;
+}
+#activeTableWrapper,
+#hofTableWrapper,
+#cartonTableWrapper{
+  margin-top: 100px;
+}
+.table-title{
+  text-align: center;
+  margin-bottom: 30px;
+}
+.inner-table{
+  width: 100%
+}
+.table .td-main-cell{
+  padding: 0;
+  border-top: 0;
 }
 .td-main-cell{
   width: 19%;
   display: inline-block;
 }
-#modal-create-user-anime-card {
-  max-height: 80% !important;
-  height: 80% !important;
-}
-#gridUpdateAnimeCardHeader {
-  display: grid;
-  grid-template-areas: "header-left header-right";
-  grid-template-columns: 9fr 1fr;
-}
-#updateAnimeCardTitle {
-  grid-area: header-left;
-}
-#closeUpdateAnimeCard {
-  font-size: 30px;
-  grid-area: header-right;
-  background-color: #e7e6e6;
+.checkbox-cell{
+  width: 12%;
   text-align: center;
 }
+
 #loaderOverlay {
   position: fixed;
   width: 100%;
