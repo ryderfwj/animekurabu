@@ -9,7 +9,7 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 
 <body>
@@ -73,6 +73,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button id="makeHOF" type="button" class="btn btn-primary">Make Hall of Fame</button>
           <button id="updateCardBtn" type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
@@ -80,18 +81,46 @@
   </div>
 
   <div id="contentWrapperContainer">
+
+    <div id="clubCarouselWrapper">
+      <div id="carouselExampleInterval" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-interval="5000">
+            <img src="/images/club_banner.PNG" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-interval="5000">
+            <img src="/images/club_banner.PNG" class="d-block w-100" alt="...">
+          </div>
+          <div class="carousel-item" data-interval="5000">
+            <img src="/images/club_banner.PNG" class="d-block w-100" alt="...">
+          </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleInterval" role="button" data-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleInterval" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
+    </div>
+
     <div id="activeTableWrapper">
       <h5 class="table-title">Active </h5>
       <table id="activeTable" class="active-outer-table table"></table>
     </div>
+
     <div id="hofTableWrapper">
       <h5 class="table-title">Hall of Fame </h5>
       <table id="hofTable" class="hof-outer-table table"></table>
     </div>
+
     <div id="cartonTableWrapper">
       <h5 class="table-title">Milk Carton </h5>
       <table id="cartonTable" class="carton-outer-table table"></table>
     </div>
+
   </div>
 
   <div id="loaderOverlay">
@@ -127,10 +156,11 @@
     integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
     integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-  <script src="scripts/auth.js"></script>
-  <script src="scripts/main.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="ttps://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone.min.js"></script>
 
-
+  <script src="/scripts/auth.js"></script>
+  <script src="/scripts/main.js"></script>
 
 </body>
 </body>

@@ -76,8 +76,33 @@
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="scripts/main.js"></script>
-  <script src="scripts/auth.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+  <script src="ttps://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.14/moment-timezone-with-data.min.js"></script>
+  <!-- <script src="scripts/main.js"></script>
+  <script src="scripts/auth.js"></script> -->
+  <script>
+    function toTimeZone(time, zone) {
+      var format = 'YYYY/MM/DD HH:mm:ss ZZ';
+      return moment(time, format).tz(zone).format(format);
+    }
+
+    //Current Date
+    var CurrentDate = moment().toISOString();
+    console.log(CurrentDate);
+
+    /*var date = '2018/03/23 05:00:00 +0000';*/
+    var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    //Current Date in server timezone
+    var result = toTimeZone(CurrentDate, timezone);
+    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    console.log(result);
+
+    var result = toTimeZone(result, 'America/Los_Angeles');
+    console.log('America/Los_Angeles');
+    console.log(result);
+  </script>
 </body>
 </body>
 

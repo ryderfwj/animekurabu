@@ -1,24 +1,74 @@
 $(document).ready(function () {
-  //$.when(loadNavBar()).then(hideDropDown());
-
   loadNavBar();
   loadModals();
 
   function loadNavBar() {
-    $('#navBarWrapper').load('html/load/navbar.html', function () {
+    $('#navBarWrapper').load('/html/load/navbar.html', function () {
       // To do
     });
     console.log('Navigation bar loaded');
   }
 
   function loadModals() {
-    $('#modalWrapper').load('html/load/modal.html', function () {
+    $('#modalWrapper').load('/html/load/modal.html', function () {
       // To do
       eventListeners();
     });
     console.log('Modals loaded');
   }
 
+});
+
+// Listen for authentication status changes
+auth.onAuthStateChanged(user => {
+  db.collection('users').get().then((snapshot) => {
+    if (user) {
+      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+        // Check for appropriate user
+        if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
+          $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
+        } else {
+          setupUserAnimeCard(snapshot.docs);
+        }
+      });
+      setupUI(user);
+    } else {
+      setupUserAnimeCard(snapshot.docs);
+      setupUI();
+    }
+  });
+
+  db.collection('halloffame').get().then((snapshot) => {
+    setupHOFCard(snapshot.docs);
+    if (user) {
+      setupUI(user);
+    } else {
+      setupUI();
+    }
+  });
+});
+
+// On database (users) change, reload
+db.collection('users').onSnapshot(snapshot => {
+  auth.onAuthStateChanged(user => {
+    if (user) {
+      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
+        if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
+          $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
+        } else {
+          setupUserAnimeCard(snapshot.docs);
+        }
+      });
+      setupUI(user);
+    } else {
+      setupUserAnimeCard(snapshot.docs);
+      setupUI();
+    }
+  });
+});
+
+db.collection('halloffame').onSnapshot(snapshot => {
+    setupHOFCard(snapshot.docs);
 });
 
 const logout = document.querySelectorAll('.logout');
@@ -65,6 +115,7 @@ const setupUI = (user) => {
 //=============================================================================================================
 const activeTable = document.querySelector('#activeTable');
 const cartonTable = document.querySelector('#cartonTable');
+const hofTable = document.querySelector('#hofTable');
 
 function cardTable(doc) {
   const users = doc.data();
@@ -111,6 +162,41 @@ function cardTable(doc) {
                 </tr>
                 <tr style="display: none;">
                     <td class="card-activity">${users.activity}</td>
+                </tr>
+            </tbody>
+        </table>
+    </td>
+    `;
+
+  return li;
+}
+
+function hofCardTable(doc) {
+  const users = doc.data();
+
+  var li = `
+    <td class="td-main-cell">
+        <table class="inner-table anime-card table-sm table-bordered" data-id='${doc.id}'>
+            <thead>
+                <tr>
+                    <td colspan="2" class="card-username">${users.nickname}</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="pick1-name">${users.pick1.name}</td>
+                </tr>
+                <tr>
+                    <td class="pick2-name">${users.pick2.name}</td>
+                </tr>
+                <tr>
+                    <td class="pick3-name">${users.pick3.name}</td>
+                </tr>
+                <tr>
+                    <td>Date Achieved</td>
+                </tr>
+                <tr>
+                    <td class="card-achieved">${users.achieved_on}</td>
                 </tr>
             </tbody>
         </table>
@@ -167,6 +253,35 @@ function setupUserAnimeCard(data) {
     cartonTable.innerHTML = cartonHTML;
   } else {
     activeTable.innerHTML = `<h5 class='center-align'>There are no card to display</h5>`;
+  }
+}
+
+function setupHOFCard(data) {
+  if (data.length) {
+    let hofHTML = '';
+    let hofCounter = 0;
+    let addHOFTR = 0;
+
+    data.forEach(doc => {
+      const users = doc.data();
+
+      if (hofCounter % 5 == 0) {
+        hofHTML += `<tr>`
+        addHOFTR = 1;
+      }
+
+      hofCounter++;
+      hofHTML += hofCardTable(doc);
+
+      if (hofCounter % 5 == 0 && addHOFTR == 1) {
+        hofHTML += `</tr>`
+        addHOFTR = 0;
+      }
+    });
+
+    hofTable.innerHTML = hofHTML;
+  } else {
+    hofTable.innerHTML = `<h5 class='center-align'>There are no card to display</h5>`;
   }
 }
 
@@ -228,11 +343,11 @@ function addOnClick() {
 }
 
 $('input[type="checkbox"]').click(function () {
-    if ($(this).prop("checked") == true) {
-        $(this).val("true");
-    } else if ($(this).prop("checked") == false) {
-        $(this).val("false");
-    }
+  if ($(this).prop("checked") == true) {
+    $(this).val("true");
+  } else if ($(this).prop("checked") == false) {
+    $(this).val("false");
+  }
 });
 
 $('#activeRadio').on("click", function () {
@@ -244,7 +359,7 @@ $('#cartonRadio').on("click", function () {
 });
 
 // Update user anime card
-$("#updateCardBtn").on('click', function(event){
+$("#updateCardBtn").on('click', function (event) {
   event.preventDefault();
   var userId = $('#updateUserId').val();
   console.log("User Id: " + userId);
@@ -272,44 +387,50 @@ $("#updateCardBtn").on('click', function(event){
   });
 });
 
-// $('#closeUpdateAnimeCard').on("click", function () {
-//   updateAnimeCardForm.reset();
-//   $("#modal-create-user-anime-card").css("display", "none");
-// });
+// Add to Hall of Fame
+$("#makeHOF").on('click', function (event) {
+  event.preventDefault();
+  var userId = $('#updateUserId').val();
+  console.log("User Id: " + userId);
+  var dateTime = getDateTime();
+  db.collection('halloffame').doc(userId).set({
+    nickname: $('#updateUserName').val(),
+    pick1: {
+      name: $('#updatePick1Name').val(),
+    },
+    pick2: {
+      name: $('#updatePick2Name').val(),
+    },
+    pick3: {
+      name: $('#updatePick3Name').val(),
+    },
+    achieved_on: dateTime,
+  }).then(() => {
+    db.collection('users').doc(userId).update({
+      pick1: {
+        name: "Empty",
+        check: "false",
+      },
+      pick2: {
+        name: "Empty",
+        check: "false",
+      },
+      pick3: {
+        name: "Empty",
+        check: "false",
+      },
+    }).catch(err => {
+      console.log(err.message);
+    });
+    // Close modal and reset form
+    $('#updateUserModal').modal('hide');
+    document.getElementById('updateUserForm').reset();
+  }).catch(err => {
+    console.log(err.message);
+  });
+});
 
-// $('#radio-active').on("click", function () {
-//   $("#radio-value").attr("value", "Active");
-// });
-
-// $('#radio-milk').on("click", function () {
-//   $("#radio-value").attr("value", "Milk Carton");
-// });
-
-// $(document).ready(function () {
-//   checkBox();
-//   setTimeout(function () {
-//     loaderHide();
-//   }, 1000);
-
-//   $('.sidenav').sidenav();
-//   $(".dropdown-trigger").dropdown();
-
-//   function checkBox() {
-//     $('input[type="checkbox"]').click(function () {
-//       if ($(this).prop("checked") == true) {
-//         $(this).val("true");
-//       } else if ($(this).prop("checked") == false) {
-//         $(this).val("false");
-//       }
-//     });
-//   }
-
-//   function loaderShow() {
-//     $("#loaderOverlay").show();
-//   }
-
-//   function loaderHide() {
-//     $("#loaderOverlay").hide();
-//   }
-
-// });
+function getDateTime() {
+  var dateTime = moment().format('DD-MM-YYYY');
+  return dateTime;
+}

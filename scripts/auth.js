@@ -1,4 +1,4 @@
-// Add admin cloud function
+// // Add admin cloud function
 // const adminForm = document.querySelector('.add-admin-actions');
 // adminForm.addEventListener('submit', (e) => {
 //   e.preventDefault();
@@ -11,7 +11,7 @@
 //   });
 // });
 
-// Add high level manager cloud function
+// // Add high level manager cloud function
 // const highLevelManagerForm = document.querySelector('.add-high-level-manager-actions');
 // highLevelManagerForm.addEventListener('submit', (e) => {
 //   e.preventDefault();
@@ -24,7 +24,7 @@
 //   });
 // });
 
-// Add low level manager cloud function
+// // Add low level manager cloud function
 // const lowLevelManagerForm = document.querySelector('.add-low-level-manager-actions');
 // lowLevelManagerForm.addEventListener('submit', (e) => {
 //   e.preventDefault();
@@ -37,7 +37,7 @@
 //   });
 // });
 
-// Add club helper cloud function
+// // Add club helper cloud function
 // const clubHelperForm = document.querySelector('.add-club-helper-actions');
 // clubHelperForm.addEventListener('submit', (e) => {
 //   e.preventDefault();
@@ -96,6 +96,7 @@ function eventListeners() {
         activity: "Active"
       });
     }).then(() => {
+      db.collection('userwatch').doc(user.uid).set({});
       document.getElementById('newUserForm').reset();
       $('#newUserModal .error').html("");
       $('#newUserModal').modal('hide');
@@ -112,59 +113,64 @@ function eventListeners() {
     e.preventDefault();
     auth.signOut();
   });
+
+  $('#promoteUserBtn').on('click', function (e) {
+    e.preventDefault();
+    var promoteEmail = $('#promoteEmail').val();
+    var selectedOption = $('#promoteSelect').val();
+    console.log(selectedOption);
+    if (selectedOption == "admin") {
+      // Add admin cloud function
+      const addAdminRole = functions.httpsCallable('addAdminRole');
+      addAdminRole({
+        email: promoteEmail
+      }).then(result => {
+        document.getElementById('promoteForm').reset();
+        $('#promoteModal').modal('hide');
+        console.log(result);
+      }).catch(err => {
+        console.log("Failed to promote user: " + err.message);
+      });
+    } else if (selectedOption == "highlevelmanager") {
+      // Add high level manager cloud function
+      const addHighLevelManagerRole = functions.httpsCallable('addHighLevelManagerRole');
+      addHighLevelManagerRole({
+        email: promoteEmail
+      }).then(result => {
+        document.getElementById('promoteForm').reset();
+        $('#promoteModal').modal('hide');
+        console.log(result);
+      }).catch(err => {
+        console.log("Failed to promote user: " + err.message);
+      });
+    } else if (selectedOption == "lowlevelmanager") {
+      // Add low level manager cloud function
+      const addLowLevelManagerRole = functions.httpsCallable('addLowLevelManagerRole');
+      addLowLevelManagerRole({
+        email: promoteEmail
+      }).then(result => {
+        document.getElementById('promoteForm').reset();
+        $('#promoteModal').modal('hide');
+        console.log(result);
+      }).catch(err => {
+        console.log("Failed to promote user: " + err.message);
+      });
+    } else if (selectedOption == "clubhelper") {
+      // Add club helper cloud function
+      e.preventDefault();
+      const addClubHelperRole = functions.httpsCallable('addClubHelperRole');
+      addClubHelperRole({
+        email: promoteEmail
+      }).then(result => {
+        document.getElementById('promoteForm').reset();
+        $('#promoteModal').modal('hide');
+        console.log(result);
+      }).catch(err => {
+        console.log("Failed to promote user: " + err.message);
+      });
+    } else {
+      alert('Invalid option chosen, please try again');
+    }
+  });
+
 }
-
-// Listen for authentication status changes
-auth.onAuthStateChanged(user => {
-  db.collection('users').get().then((snapshot) => {
-    if (user) {
-      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-        // Check for appropriate user
-        if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
-          $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
-        } else {
-          setupUserAnimeCard(snapshot.docs);
-        }
-      });
-      setupUI(user);
-    } else {
-      setupUserAnimeCard(snapshot.docs);
-      setupUI();
-    }
-
-  });
-  // if (user) {
-  //   user.getIdTokenResult().then(idTokenResult => {
-  //     setupUI(user);
-  //   });
-  //   console.log('User has logged in');
-  // } else {
-  //   console.log('User has logged out');
-  //   setupUI();
-  // }
-});
-
-// On database (users) change, reload
-db.collection('users').onSnapshot(snapshot => {
-  auth.onAuthStateChanged(user => {
-    if (user) {
-      firebase.auth().currentUser.getIdTokenResult().then((idTokenResult) => {
-        if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
-          $.when(setupUserAnimeCard(snapshot.docs)).then(addOnClick());
-        } else {
-          setupUserAnimeCard(snapshot.docs);
-        }
-      });
-      setupUI(user);
-    } else {
-      setupUserAnimeCard(snapshot.docs);
-      setupUI();
-    }
-  });
-});
-
-
-
-
-
-
