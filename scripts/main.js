@@ -3,14 +3,14 @@ $(document).ready(function () {
   loadModals();
 
   function loadNavBar() {
-    $('#navBarWrapper').load('/animekurabu/html/load/navbar.html', function () {
+    $('#navBarWrapper').load('load/navbar.html', function () {
       // To do
     });
     console.log('Navigation bar loaded');
   }
 
   function loadModals() {
-    $('#modalWrapper').load('/animekurabu/html/load/modal.html', function () {
+    $('#modalWrapper').load('load/modal.html', function () {
       // To do
       eventListeners();
     });

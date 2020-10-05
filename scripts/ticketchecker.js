@@ -19,14 +19,14 @@ db.collection('users').onSnapshot(snapshot => {
                 if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
                   $('#addAnimeModalBtn').css('display', 'inline');
                   $('#updateAnimeBtn').css('display', 'inline');
-                  $('#ticketTable td').css('pointer-events', 'auto');
+                  $('#ticketTable').css('pointer-events', 'auto');
                   setTimeout(function () {
                     $("#loaderOverlay").hide();
                   }, 2000);
                 } else {
                   $('#addAnimeModalBtn').css('display', 'none');
                   $('#updateAnimeBtn').css('display', 'none');
-                  $('#ticketTable td').css('pointer-events', 'none');
+                  $('#ticketTable').css('pointer-events', 'none');
                   setTimeout(function () {
                     $("#loaderOverlay").hide();
                   }, 2000);
@@ -36,7 +36,7 @@ db.collection('users').onSnapshot(snapshot => {
               setupUI();
               $('#addAnimeModalBtn').css('display', 'none');
               $('#updateAnimeBtn').css('display', 'none');
-              $('#ticketTable td').css('pointer-events', 'none');
+              $('#ticketTable').css('pointer-events', 'none');
               setTimeout(function () {
                 $("#loaderOverlay").hide();
               }, 2000);
@@ -54,14 +54,14 @@ auth.onAuthStateChanged(user => {
       if (!!idTokenResult.claims.admin || !!idTokenResult.claims.highlevelmanager) {
         $('#addAnimeModalBtn').css('display', 'inline');
         $('#updateAnimeBtn').css('display', 'inline');
-        $('#ticketTable td').css('pointer-events', 'auto');
+        $('#ticketTable').css('pointer-events', 'auto');
         setTimeout(function () {
           $("#loaderOverlay").hide();
         }, 2000);
       } else {
         $('#addAnimeModalBtn').css('display', 'none');
         $('#updateAnimeBtn').css('display', 'none');
-        $('#ticketTable td').css('pointer-events', 'none');
+        $('#ticketTable').css('pointer-events', 'none');
         setTimeout(function () {
           $("#loaderOverlay").hide();
         }, 2000);
@@ -71,7 +71,7 @@ auth.onAuthStateChanged(user => {
     setupUI();
     $('#addAnimeModalBtn').css('display', 'none');
     $('#updateAnimeBtn').css('display', 'none');
-    $('#ticketTable td').css('pointer-events', 'none');
+    $('#ticketTable').css('pointer-events', 'none');
     setTimeout(function () {
       $("#loaderOverlay").hide();
     }, 2000);
@@ -120,14 +120,14 @@ $(document).ready(function () {
   loadModals();
 
   function loadNavBar() {
-    $('#navBarWrapper').load('/animekurabu/html/load/navbar.html', function () {
+    $('#navBarWrapper').load('load/navbar.html', function () {
       // To do
     });
     console.log('Navigation bar loaded');
   }
 
   function loadModals() {
-    $('#modalWrapper').load('/animekurabu/html/load/modal.html', function () {
+    $('#modalWrapper').load('load/modal.html', function () {
       // To do
       eventListeners();
     });
@@ -171,11 +171,11 @@ $("#addAnimeBtn").on('click', function (event) {
     name: $('#addAnimeName').val(),
     picked_by_name: $("#userPickBy option:selected").text(),
     picked_by_id: $('#userPickBy').val(),
-    start_date: "",
-    end_date: "",
-    episodes: "",
-    episode_length: "",
-    session_used: "",
+    start_date: $('#startDate').val(),
+    end_date: $('#endDate').val(),
+    episodes: $('#episodes').val(),
+    episode_length: $('#episodeLength').val(),
+    session_used: $('#sessionUsed').val(),
     date_added: dateTime(),
   }).then(() => {
     // Close modal and reset form
